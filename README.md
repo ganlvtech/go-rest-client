@@ -28,6 +28,10 @@ Run protobuf compiler with `gorestclient` plugin.
 protoc *.proto --gorestclient_out=.
 ```
 
+```plain
+-I $GO_PATH/src/github.com/ganlvtech/go-rest-client/rest/
+```
+
 Generated `auth.go`.
 
 ```go
@@ -67,6 +71,10 @@ func (s *AuthService) AuthByPassword(in *Auth_AuthByPasswordRequest) (*Auth_Auth
 ```
 
 ## Installation
+
+```bash
+go install github.com/ganlvtech/go-rest-client
+```
 
 ## License
 
