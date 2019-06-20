@@ -108,7 +108,7 @@ func GoType(field *descriptor.FieldDescriptorProto) string {
 		// treat group fields as unknown fields.
 		log.Fatal("deprecated FieldDescriptorProto_TYPE_GROUP", field.GetName())
 	case descriptor.FieldDescriptorProto_TYPE_MESSAGE:
-		typ = "*" + FullQualifiedTypeNameToGoType(field.GetTypeName())
+		typ = FullQualifiedTypeNameToGoType(field.GetTypeName())
 	case descriptor.FieldDescriptorProto_TYPE_BYTES:
 		typ = "[]byte"
 	case descriptor.FieldDescriptorProto_TYPE_ENUM:

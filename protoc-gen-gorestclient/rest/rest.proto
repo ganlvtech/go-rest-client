@@ -21,6 +21,7 @@ extend google.protobuf.FieldOptions {
     HttpMethod field_method = 1000;
     string name = 1001;
     bool required = 1002;
+    bool request_param_nullable = 1003;
 }
 
 extend google.protobuf.MethodOptions {

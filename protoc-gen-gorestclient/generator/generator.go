@@ -14,12 +14,16 @@ type Generator struct {
 	Response *plugin.CodeGeneratorResponse
 
 	fileByName map[string]*descriptor.FileDescriptorProto
+
+	FileGenerators   []*FileGenerator
+	FileGeneratorMap map[string]*FileGenerator
 }
 
 func New() *Generator {
 	g := new(Generator)
 	g.Request = new(plugin.CodeGeneratorRequest)
 	g.Response = new(plugin.CodeGeneratorResponse)
+	g.FileGeneratorMap = make(map[string]*FileGenerator)
 	return g
 }
 
@@ -62,7 +66,6 @@ func (g *Generator) GenerateAllFiles() {
 	if len(g.Request.FileToGenerate) == 0 {
 		g.Fail("no files to generate")
 	}
-
 	g.mapFileByName()
 	for _, fileName := range g.Request.FileToGenerate {
 		g.GenerateFile(g.fileByName[fileName])
@@ -71,6 +74,7 @@ func (g *Generator) GenerateAllFiles() {
 
 func (g *Generator) GenerateFile(file *descriptor.FileDescriptorProto) {
 	fileGenerator := NewFileGenerator(file)
+	fileGenerator.WrapTypes()
 	fileGenerator.Generate()
 	g.Response.File = append(g.Response.File, &plugin.CodeGeneratorResponse_File{
 		Name:    proto.String(fileGenerator.GoFileName()),
